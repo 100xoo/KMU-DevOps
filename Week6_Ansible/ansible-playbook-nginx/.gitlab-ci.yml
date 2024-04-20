@@ -1,0 +1,16 @@
+stages:
+    - priv
+    - setup
+
+add-sudoer:
+    stage: priv
+    script:
+        - echo "gitlab-runner ALL=(ALL) NOPASSWD:ALL" > sudo tee -a /etc/sudoers.d/gitlab-runner
+
+ansible-run:
+    stage: setup
+    script:
+        - ansible-playbook -i development site.yml
+    tags:
+        - shell
+
